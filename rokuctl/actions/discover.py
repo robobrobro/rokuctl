@@ -42,13 +42,13 @@ class Discover(Action):
 
                 count += 1
 
-                match = re.search('^USN:\s+uuid:roku:ecp:(?P<uuid>[A-Za-z0-9]+)\r$', msg, flags=re.M | re.S)
+                match = re.search('^USN:\s+uuid:roku:ecp:(?P<uuid>[A-Za-z0-9]+)\r$', msg, flags=re.M | re.S | re.I)
                 uuid = match.group('uuid')
-                match = re.search('^Server:\s+(?P<server>[^\r]+)\r$', msg, flags=re.M | re.S)
+                match = re.search('^Server:\s+(?P<server>[^\r]+)\r$', msg, flags=re.M | re.S | re.I)
                 server = match.group('server')
-                match = re.search('^LOCATION:\s+(?P<location>[^\r]+)\r$', msg, flags=re.M | re.S)
+                match = re.search('^LOCATION:\s+(?P<location>[^\r]+)\r$', msg, flags=re.M | re.S | re.I)
                 location = match.group('location')
-                match = re.search('MAC=(?P<mac>([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2})', msg, flags=re.M | re.S)
+                match = re.search('MAC=(?P<mac>([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2})', msg, flags=re.M | re.S | re.I)
                 mac = match.group('mac')
 
                 print('UUID: {}'.format(uuid))
