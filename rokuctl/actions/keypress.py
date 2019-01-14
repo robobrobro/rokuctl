@@ -1,6 +1,7 @@
 from .base import Action
 import requests
 import sys
+import time
 
 class Keypress(Action):
     name = 'keypress'
@@ -12,17 +13,26 @@ class Keypress(Action):
         },
         '-k': {
             'help': 'Remote control key to press',
-            'required': True,
-            'dest': 'key',
+            'nargs': '+',
+            'dest': 'keys',
+        },
+        '-p': {
+            'help': 'Period to wait between key presses (default: 1 sec)',
+            'dest': 'period',
+            'type': float,
+            'default': 1,
         },
     }
 
     @staticmethod
     def execute(args):
-        try:
-            resp = requests.post('http://{}:8060/keypress/{}'.format(args.ip.strip(), args.key.strip()))
-        except requests.exceptions.ConnectionError as ex:
-            print(str(ex), file=sys.stderr)
-            return
+        period = max(0, args.period)
 
-        print(resp.text)
+        for key in args.keys:
+            try:
+                resp = requests.post('http://{}:8060/keypress/{}'.format(args.ip.strip(), key.strip()))
+            except requests.exceptions.ConnectionError as ex:
+                print(str(ex), file=sys.stderr)
+                return
+
+            time.sleep(period)
