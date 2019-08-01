@@ -1,4 +1,5 @@
 from .base import Action
+from xml.etree import ElementTree
 import requests
 import sys
 
@@ -20,4 +21,6 @@ class Info(Action):
             print(str(ex), file=sys.stderr)
             return
 
-        print(resp.text)
+        tree = ElementTree.fromstring(resp.text)
+        fields_and_values = ((el.tag, el.text) for el in tree)
+        print('\n'.join('{}: {}'.format(field, value) for field, value in fields_and_values))
