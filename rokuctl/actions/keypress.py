@@ -36,4 +36,5 @@ class Keypress(Action):
                 print(str(ex), file=sys.stderr)
                 return
 
-            time.sleep(period)
+            if len(args.keys) > 1:
+                time.sleep(period)
