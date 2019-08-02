@@ -15,6 +15,7 @@ class Keypress(Action):
             'help': 'Remote control key to press',
             'nargs': '+',
             'dest': 'keys',
+            'required': True,
         },
         '-p': {
             'help': 'Period to wait between key presses (default: 1 sec)',
